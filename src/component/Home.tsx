@@ -9,9 +9,15 @@ export default function Home() {
     const item = items.find((item) => item.id === id);
     if (item) {
       if (!cart.find((cartItem) => cartItem.id === id)) {
-        setCart([...cart, item]);
+        setCart((prevCart) => {
+          const updatedCart = [...prevCart, item];
+          console.log("Updated cart:", updatedCart);
+          return updatedCart;
+        });
       } else {
-        setCart(cart.filter((cartItem) => cartItem.id !== id));
+        setCart((prevCart) =>
+          prevCart.filter((cartItem) => cartItem.id !== id)
+        );
       }
     }
   };
@@ -28,7 +34,12 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="d-flex flex-wrap gap-3 p-3">
+    <div className="d-flex flex-wrap gap-2 p-3 h-100 m-2">
+      {items.length === 0 && (
+        <div className="w-100 d-flex justify-content-center align-items-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-gray-300 border-t-blue-500"></div>
+        </div>
+      )}
       {items.map((product) => (
         <BasicExample
           key={product.id}

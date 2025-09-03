@@ -23,12 +23,10 @@ function BasicExample({
   AddToCart: (id: number) => void;
   cart: { id: number; title: string; price: string }[];
 }) {
-  const navigate = useNavigate();
-
   return (
     <Card
-      onClick={() => navigate(`/product/${id}`)}
       style={{ width: "18rem", border: "1px solid #eee" }}
+      className="shadow-sm m-0"
     >
       <div className="position-relative">
         <Card.Img variant="top" src={image} />
@@ -42,7 +40,10 @@ function BasicExample({
           {Stock > 20 ? "In Stock" : "Out of Stock"}
         </div>
       </div>
-      <Card.Body>
+      <Card.Body
+        onClick={() => navigate(`/product/${id}`)}
+        style={{ cursor: "pointer" }}
+      >
         <div className="d-flex justify-content-between ">
           <Card.Title style={{ fontSize: "1rem" }}>{title}</Card.Title>
           <span className="float-end d-flex gap-2">
@@ -59,20 +60,21 @@ function BasicExample({
           <i className="bi bi-star"></i>
           <span className="text-dark ms-2">(4.0)</span>
         </div>
-        <Button
-          onClick={() => AddToCart(id)}
-          style={{
-            backgroundColor: cart.find((item) => item.id === id)
-              ? "green"
-              : "transparent",
-            color: "black",
-            border: "1px solid #ccc",
-            borderRadius: "30px",
-          }}
-        >
-          Add To Cart
-        </Button>
       </Card.Body>
+      <Button
+        onClick={() => AddToCart(id)}
+        style={{
+          margin: "0 1rem 1rem 1rem",
+          backgroundColor: cart.find((item) => item.id === id)
+            ? "green"
+            : "transparent",
+          color: "black",
+          border: "1px solid #ccc",
+          borderRadius: "30px",
+        }}
+      >
+        Add To Cart
+      </Button>
     </Card>
   );
 }

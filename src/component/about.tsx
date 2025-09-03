@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Row, Col, Image, Button } from "react-bootstrap";
 
 export default function About() {
+  useEffect(() => {
+    throw new Error("Simulated error for testing purposes");
+  }, []);
   return (
     <section className="py-5 bg-white" id="about">
       <Container>
