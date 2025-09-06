@@ -23,11 +23,10 @@ function BasicExample({
   AddToCart: (id: number) => void;
   cart: { id: number; title: string; price: string }[];
 }) {
+  const navigate = useNavigate();
+
   return (
-    <Card
-      style={{ width: "18rem", border: "1px solid #eee" }}
-      className="shadow-sm m-0"
-    >
+    <Card>
       <div className="position-relative">
         <Card.Img variant="top" src={image} />
 
@@ -51,7 +50,18 @@ function BasicExample({
             <p className="text-danger">{discountPercentage}</p>
           </span>
         </div>
-        <Card.Text>{description}</Card.Text>
+        <Card.Text
+          style={{
+            fontSize: "0.875rem",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            display: "-webkit-box",
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: "vertical",
+          }}
+        >
+          {description}
+        </Card.Text>
         <div className="mb-2 text-warning">
           <i className="bi bi-star-fill"></i>
           <i className="bi bi-star-fill"></i>
@@ -68,12 +78,14 @@ function BasicExample({
           backgroundColor: cart.find((item) => item.id === id)
             ? "green"
             : "transparent",
-          color: "black",
           border: "1px solid #ccc",
           borderRadius: "30px",
+          color: cart.find((item) => item.id === id) ? "white" : "black",
         }}
       >
-        Add To Cart
+        {cart.find((item) => item.id === id)
+          ? "Remove from Cart"
+          : "Add to Cart"}
       </Button>
     </Card>
   );

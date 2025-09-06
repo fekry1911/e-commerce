@@ -109,27 +109,27 @@ export default function ProductDetails() {
         </div>
       </div>
       <div className="row">
-        <div className="col-md-6">
-          <div className="d-flex justify-content-start gap-3 row">
+        <div className="col-4">
+          <div className="d-flex justify-content-start gap-4 justify-content-between">
             <img
               src={item?.images?.[0]}
               alt="Related Product"
-              className="col-md-2 border border-secondary rounded-4"
+              className="col-2 border border-secondary rounded-4"
             />
             <img
               src={item?.images?.[0]}
               alt="Related Product"
-              className="col-md-2 border border-secondary rounded-4"
-            />{" "}
+              className="col-2 border border-secondary rounded-4"
+            />
             <img
               src={item?.images?.[0]}
               alt="Related Product"
-              className="col-md-2 border border-secondary rounded-4"
-            />{" "}
+              className="col-2 border border-secondary rounded-4"
+            />
             <img
               src={item?.images?.[0]}
               alt="Related Product"
-              className="col-md-2 border border-secondary rounded-4"
+              className="col-2 border border-secondary rounded-4"
             />
           </div>
         </div>

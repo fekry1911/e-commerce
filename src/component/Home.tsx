@@ -1,58 +1,45 @@
 import React, { useState, useEffect } from "react";
 import BasicExample from "./Card";
+import { useCart } from "../context/CartContext";
 
 export default function Home() {
-  const [items, setItems] = useState([]);
-  const [cart, setCart] = useState([]);
-
-  const AddToCart = (id: number) => {
-    const item = items.find((item) => item.id === id);
-    if (item) {
-      if (!cart.find((cartItem) => cartItem.id === id)) {
-        setCart((prevCart) => {
-          const updatedCart = [...prevCart, item];
-          console.log("Updated cart:", updatedCart);
-          return updatedCart;
-        });
-      } else {
-        setCart((prevCart) =>
-          prevCart.filter((cartItem) => cartItem.id !== id)
-        );
-      }
-    }
-  };
+  const [items, setItems] = useState<any[]>([]);
+  const { cart, addToCart, removeFromCart } = useCart();
 
   useEffect(() => {
     fetch("https://dummyjson.com/products")
       .then((response) => response.json())
-      .then((data) => {
-        setItems(data.products);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+      .then((data) => setItems(data.products))
+      .catch((error) => console.error("Error:", error));
   }, []);
 
+  const toggleCart = (product: any) => {
+    if (cart.find((item) => item.id === product.id)) {
+      removeFromCart(product.id);
+    } else {
+      addToCart(product);
+    }
+  };
+
   return (
-    <div className="d-flex flex-wrap gap-2 p-3 h-100 m-2">
-      {items.length === 0 && (
-        <div className="w-100 d-flex justify-content-center align-items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-4 border-gray-300 border-t-blue-500"></div>
-        </div>
-      )}
+    <div className="row gap-4 justify-content-center mt-4">
       {items.map((product) => (
-        <BasicExample
+        <div
           key={product.id}
-          title={product.title}
-          description={product.description}
-          image={product.thumbnail}
-          Stock={product.stock}
-          price={product.price}
-          id={product.id}
-          discountPercentage={product.discountPercentage}
-          AddToCart={AddToCart}
-          cart={cart}
-        />
+          className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
+        >
+          <BasicExample
+            title={product.title}
+            description={product.description}
+            image={product.thumbnail}
+            Stock={product.stock}
+            price={product.price}
+            id={product.id}
+            discountPercentage={product.discountPercentage}
+            AddToCart={() => toggleCart(product)}
+            cart={cart}
+          />
+        </div>
       ))}
     </div>
   );
